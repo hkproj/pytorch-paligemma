@@ -1,6 +1,5 @@
 from PIL import Image
 import torch
-import json
 import fire
 
 from processing_paligemma import PaliGemmaProcessor
