@@ -1,0 +1,10 @@
+fire==0.6.0
+numpy==1.26.4
+pillow==10.3.0
+safetensors==0.4.3
+tokenizers==0.19.1
+torch==2.3.0
+torchaudio==2.3.0
+torchvision==0.18.0
+tqdm==4.66.4
+transformers==4.41.2
