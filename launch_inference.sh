@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# model_path: str = None,
-# prompt: str = None,
-# picture_file: str = None,
-
 MODEL_PATH="$HOME/projects/paligemma-weights/paligemma-3b-pt-224"
 PROMPT="this building is "
 IMAGE_FILE_PATH="test_images/pic1.jpg"
