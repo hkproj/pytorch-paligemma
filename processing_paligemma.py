@@ -107,12 +107,7 @@ class PaliGemmaProcessor:
         padding: str = "longest",
         truncation: bool = True,
     ) -> dict:
-        assert isinstance(text, list) and isinstance(
-            images, list
-        ), "text and images should be lists."
-
-        if len(images) < len(text):
-            raise ValueError(f"Received {len(images)} images for {len(text)} prompts.")
+        assert len(images) == 1 and len(text) == 1, f"Received {len(images)} images for {len(text)} prompts."
 
         pixel_values = process_images(
             images,
