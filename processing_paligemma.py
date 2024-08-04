@@ -104,8 +104,6 @@ class PaliGemmaProcessor:
         self,
         text: List[str],
         images: List[Image.Image],
-        suffix: List[str] = None,
-        max_length: int = None,
         padding: str = "longest",
         truncation: bool = True,
     ) -> dict:
@@ -129,10 +127,6 @@ class PaliGemmaProcessor:
         # Convert the numpy array to a PyTorch tensor
         pixel_values = torch.tensor(pixel_values)
 
-        if max_length is not None:
-            # max_length has to account for the image tokens
-            max_length += self.image_seq_length
-
         # Prepend a `self.image_seq_length` number of image tokens to the prompt
         input_strings = [
             add_image_tokens_to_prompt(
@@ -147,10 +141,8 @@ class PaliGemmaProcessor:
         # Returns the input_ids and attention_mask as PyTorch tensors
         inputs = self.tokenizer(
             input_strings,
-            text_pair=suffix,
             return_tensors="pt",
             padding=padding,
-            max_length=max_length,
             truncation=truncation,
         )
 

@@ -70,7 +70,7 @@ def test_inference(
         if next_token.item() == stop_token:
             break
         # Append the next token to the input
-        input_ids = torch.cat([next_token.unsqueeze(-1)], dim=-1)
+        input_ids = next_token.unsqueeze(-1)
         attention_mask = torch.cat(
             [attention_mask, torch.ones((1, 1), device=input_ids.device)], dim=-1
         )
