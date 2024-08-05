@@ -399,7 +399,6 @@ class GemmaForCausalLM(nn.Module):
         position_ids: Optional[torch.LongTensor] = None,
         inputs_embeds: Optional[torch.FloatTensor] = None,
         kv_cache: Optional[KVCache] = None,
-        labels: Optional[torch.LongTensor] = None,
     ) -> Tuple:
 
         # input_embeds: [Batch_Size, Seq_Len, Hidden_Size]
@@ -414,21 +413,9 @@ class GemmaForCausalLM(nn.Module):
         hidden_states = outputs
         logits = self.lm_head(hidden_states)
         logits = logits.float()
-        loss = None
-        if labels is not None:
-            # Shift so that tokens < n predict n
-            shift_logits = logits[..., :-1, :].contiguous()
-            shift_labels = labels[..., 1:].contiguous()
-            # Flatten the tokens
-            loss_fct = CrossEntropyLoss()
-            shift_logits = shift_logits.view(-1, self.config.vocab_size)
-            shift_labels = shift_labels.view(-1)
-            shift_labels = shift_labels.to(shift_logits.device)
-            loss = loss_fct(shift_logits, shift_labels)
 
         return_data = {
             "logits": logits,
-            "loss": loss,
         }
 
         if kv_cache is not None:
@@ -537,7 +524,6 @@ class PaliGemmaForConditionalGeneration(nn.Module):
         pixel_values: torch.FloatTensor = None,
         attention_mask: Optional[torch.Tensor] = None,
         kv_cache: Optional[KVCache] = None,
-        labels: Optional[torch.LongTensor] = None,
     ) -> Tuple:
 
         # Make sure the input is right-padded
@@ -561,7 +547,6 @@ class PaliGemmaForConditionalGeneration(nn.Module):
             position_ids=position_ids,
             inputs_embeds=inputs_embeds,
             kv_cache=kv_cache,
-            labels=labels,
         )
 
         return outputs
