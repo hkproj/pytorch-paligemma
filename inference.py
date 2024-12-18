@@ -15,7 +15,7 @@ def move_inputs_to_device(model_inputs: dict, device: str):
 def get_model_inputs(
     processor: PaliGemmaProcessor, prompt: str, image_file_path: str, device: str
 ):
-    image = Image.open(image_file_path)
+    image = Image.open(image_file_path).convert('RGB')
     images = [image]
     prompts = [prompt]
     model_inputs = processor(text=prompts, images=images)
